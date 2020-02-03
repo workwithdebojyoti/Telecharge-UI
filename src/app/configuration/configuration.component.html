@@ -1,10 +1,10 @@
+<app-header-control></app-header-control>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand fa fa-home" style="font-size:48px" [routerLink]="['/dashboard']"></a>
   <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-link" [ngClass]="{'nav-item active': configMode}"><a (click)='changeView("Registration Info")'>Registration Info</a></li>
-        <li class="nav-link" [ngClass]="{'nav-item active': bonusMode}"><a (click)='changeView("Bonus Info")'>Bonus Info</a></li>
-        <li class="nav-link" [ngClass]="{'nav-item active': bankMode}"><a (click)='changeView("Bank Account")'>Bank Account</a></li>
+        <li class="nav-link nav-link pointer" [ngClass]="{'nav-item active': configMode}"><a (click)='changeView("Registration Info")'>Registration Info</a></li>
+        <li class="nav-link nav-link pointer" [ngClass]="{'nav-item active': bonusMode}"><a (click)='changeView("Bonus Info")'>Bonus Info</a></li>
+        <li class="nav-link nav-link pointer" [ngClass]="{'nav-item active': bankMode}"><a (click)='changeView("Bank Account")'>Bank Account</a></li>
         <!-- <li><a href="#">Link</a></li> -->
       </ul>
   </div>
@@ -12,9 +12,9 @@
 
 <!-- Configuration -->
 <div class="card" *ngIf='configMode'>
-  <h2>
-    Configuration
-  </h2>
+  <div class="card-header">
+    <label>Configuration</label>
+  </div>
   <table class="table table-hover table-striped">
     <thead>
       <tr class="grid-header">
@@ -26,12 +26,12 @@
       <tbody>
         <tr>
           <td><label>Referal Wallet Balance Deduct Amount</label></td>
-          <td><input type="text" [(ngModel)]="referal_wallet_balance_deduct_amount" title="Rs...."
+          <td><input class="form-control" type="text" [(ngModel)]="referal_wallet_balance_deduct_amount" title="Rs...."
               placeholder="Rs...." /></td>
         </tr>
         <tr>
           <td><label>Down Side Direct Numer Of Joinee</label></td>
-          <td><input type="text" [(ngModel)]="down_side_direct_numer_of_joinee" title="Joinee Number..."
+          <td><input class="form-control" type="text" [(ngModel)]="down_side_direct_numer_of_joinee" title="Joinee Number..."
               placeholder="Joinee Number...." /></td>
         </tr>
         <!-- <tr>
@@ -45,26 +45,26 @@
         </tr> -->
         <tr>
           <td><label>First Registration Wallet Balance</label></td>
-          <td><input type="text" [(ngModel)]="first_registration_wallet_balance" title="Rs..." placeholder="Rs...." />
+          <td><input class="form-control" type="text" [(ngModel)]="first_registration_wallet_balance" title="Rs..." placeholder="Rs...." />
           </td>
         </tr>
         <tr>
           <td><label>Wallet Approvar Role</label></td>
-          <td><input type="text" [(ngModel)]="wallet_approver_role" title="Role..." placeholder="Role...." /></td>
+          <td><input class="form-control" type="text" [(ngModel)]="wallet_approver_role" title="Role..." placeholder="Role...." /></td>
         </tr>
         <tr>
           <td><label>Days within KYC document need to submit.</label></td>
-          <td><input type="number" [(ngModel)]="kyc_submission_days" title="KYC submission days...."
+          <td><input class="form-control" type="number" [(ngModel)]="kyc_submission_days" title="KYC submission days...."
               placeholder="KYC submission days...." /></td>
         </tr>
         <tr>
           <td><label>First level complaint assignee</label></td>
-          <td><input type="number" [(ngModel)]="firstLevelAssignee" title="First Level Assignee...."
+          <td><input class="form-control" type="number" [(ngModel)]="firstLevelAssignee" title="First Level Assignee...."
               placeholder="First Level Assignee...." /></td>
         </tr>
         <tr>
           <td></td>
-          <td><button (click)="submitConfiguration()" class="btn btn-primary float-right">Submit</button></td>
+          <td><button (click)="submitConfiguration()" class="btn btn-primary float-right" style="margin-bottom: 30px;">Submit</button></td>
         </tr>
 
       </tbody>
@@ -74,6 +74,9 @@
 
 <!-- Bonus Info -->
 <div *ngIf='bonusMode' class="card">
+    <div class="card-header">
+        <label>Bonus Information</label>
+    </div>
   <form [formGroup]="viewBonusInfoForm">
       <table class="table table-hover table-striped table-bordered">
         <thead>
@@ -87,10 +90,8 @@
             <tbody>
               <tr *ngFor="let info of levelBonusInfoList; let i = index">
                 <td>{{info.introducerLevel}}</td>
-                <!-- <td>{{info.referralBonus}}</td>
-                <td>{{info.monthlyPayout}}</td> -->
-                <td><input type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.referralBonus' [disabled]='false' formControlName="referralAmount"></td>
-                <td><input type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.monthlyPayout' [disabled]='false' formControlName="monthlyAmount"></td>
+                <td><input class="form-control col-md-4" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.referralBonus' [disabled]='false' formControlName="referralAmount"></td>
+                <td><input class="form-control col-md-4" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.monthlyPayout' [disabled]='false' formControlName="monthlyAmount"></td>
                 <td><input class="btn btn-primary" type="button" value="Update"
                   (click) = "updateLevel(info, viewFormControl.referralAmount.value, viewFormControl.monthlyAmount.value, viewFormControl.monthlyAmount, viewFormControl.referralAmount)" [disabled]="!info.validBonus"></td>
               </tr>
@@ -115,9 +116,8 @@
 <!-- Bank Account Details -->
 
 <div class="card" *ngIf='bankMode'>
-  <div class="card-header" style="color: grey">
-    Banking info
-    <br/>
+  <div class="card-header">
+    <label>Banking info</label>
     <label style="color: green" *ngIf='bankInfoAdded && formSubmitted'>Bank Info Added succesfully</label>
     <label style="color: red" *ngIf='!bankInfoAdded && formSubmitted'>Something went wrong</label>
   </div>

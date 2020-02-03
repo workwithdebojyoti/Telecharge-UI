@@ -10,9 +10,7 @@
     font-weight: bold;
 }
 
-ul .active {
-    border-bottom: 2px solid #28a745;
-}
+
 
 .btn {
     color: white;
@@ -48,11 +46,6 @@ display:none;
 display:block; }
 }
 
-a, label {
-    margin-left: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 700; 
-  }
 
   p {
     margin-left: 15px;

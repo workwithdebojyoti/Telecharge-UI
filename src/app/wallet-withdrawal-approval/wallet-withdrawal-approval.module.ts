@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { WalletWithdrawalApprovalRoutingModule } from './wallet-withdrawal-approval-routing.module';
 import { WalletWithdrawalApprovalComponent } from './wallet-withdrawal-approval.component';
 import { MatSlideToggleModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
-
+import { CommonControlsModule } from '../common-controls/common-controls.module';
 @NgModule({
     declarations: [WalletWithdrawalApprovalComponent],
     imports: [
@@ -13,7 +13,8 @@ import { MatSlideToggleModule, MatButtonModule, MatCheckboxModule } from '@angul
         FormsModule,
         ReactiveFormsModule,
         MatSlideToggleModule, MatCheckboxModule,
-        MatButtonModule
+        MatButtonModule,
+        CommonControlsModule
     ],
     exports: [MatButtonModule, MatSlideToggleModule, MatCheckboxModule],
 })

@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommissionSettingComponent } from '../commission-setting/commission-setting.component';
 import { CommissionSettingRoutingModule } from '../commission-setting/commission-setting-routing.module';
 import { DemoMaterialModule } from '../material-module';
+import { CommonControlsModule } from '../common-controls/common-controls.module';
 @NgModule({
     declarations: [CommissionSettingComponent],
     imports: [
@@ -11,7 +12,8 @@ import { DemoMaterialModule } from '../material-module';
         FormsModule,
         ReactiveFormsModule,
         CommissionSettingRoutingModule,
-        DemoMaterialModule
+        DemoMaterialModule,
+        CommonControlsModule
     ],
     exports: [CommissionSettingComponent]
 })
