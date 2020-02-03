@@ -58,3 +58,36 @@ a, label {
     margin-left: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.sidenav {
+    height: 100%;
+    /* width: 250px; */
+    position: relative;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+  }
+  /* Style the content */
+.content {
+    margin-left: 200px;
+    padding-left: 20px;
+  }
+
+  
+  .image-style {
+      max-width: 100%;
+      max-height: 100%  
+    }
+
+    .header {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: bold; 
+    }
+    .success-text {
+        color: green;
+        margin-left: 5px;
+    }
+  
+  

@@ -49,6 +49,7 @@ export class RegisterUserModel {
     password: string;
     extendedDate: Date;
     kycID: number;
+    bankID: number;
 }
 export interface MobileValidationResponse {
     isValid: boolean;

@@ -11,6 +11,7 @@ import { ApiUrlService } from '../api.url.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { RegisterUserModel, MobileUniqueValidationResponse, TodayUserJoinCountResponse } from 'src/app/models/user.model';
 import { WalletLog, WalletReportResponse } from 'src/app/models/wallet-balance-report.model';
+import { BankDetails, UserBankDetails } from 'src/app/models/common.model';
 
 @Injectable({
   providedIn: 'root'
@@ -373,6 +374,21 @@ export class UserService {
     };
     const mainURL = this.apiUrlService.getFullURL('EXTEND_KYC_SUBMISSION_DATE', urlStringObject);
     return this.baseService.post(mainURL, {}, true);
+  }
+
+  public getUserBankDetails(bankID: number): Observable<UserBankDetails> {
+    // var url: string = `user/users/${user_name}`;
+    const params = new HttpParams();
+    const urlStringObject = {
+      bankID: bankID
+    };
+    const mainURL = this.apiUrlService.getFullURL('FETCH_USER_BANK_INFO', urlStringObject);
+    return this.baseService.get(mainURL, {}, params);
+  }
+
+  public updateUserBankInfo(userBankInfo: UserBankDetails): Observable<any> {
+    const mainURL = this.apiUrlService.getFullURL('UPDATE_BANK_INFO_USER');
+    return this.baseService.post(mainURL, userBankInfo, true);
   }
 
 }

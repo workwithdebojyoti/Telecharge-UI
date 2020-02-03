@@ -56,7 +56,15 @@ export class BankDetails {
     ifscCode: string;
     accountNumber: number;
 }
-
+export class UserBankDetails {
+    bank_detail_id: number;
+    bank_name: string;
+    account_holder_name: string;
+    branch_name: string;
+    ifsc_number: string;
+    account_number: number;
+    is_pay_online: boolean;
+}
 export class RechargeTransaction {
     transactionID: number;
     userID: number;

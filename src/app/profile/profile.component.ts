@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { AddressProof } from '../models/addressproof.model';
 import { IdProof } from '../models/idproof.model';
 import { AuthService } from '../services/auth.service/auth.service';
+import { BankDetails, UserBankDetails } from '../models/common.model';
 
 @Component({
   selector: 'app-profile',
@@ -75,18 +76,58 @@ export class ProfileComponent implements OnInit {
   public isAdmin: boolean;
   public isSuperAdmin: boolean;
   public isUser: boolean;
-
-
+  bankDetailsUpdated: boolean;
+  public userBankInfo: UserBankDetails;
+  public userBankInformationForm: FormGroup;
   constructor(private common: CommonService, private profileService: ProfileService, private formBuilder: FormBuilder,
     @Inject(LOCAL_STORAGE) private storage: WebStorageService, private data: DataService, private userService: UserService,
     private loadingScreenService: LoadingScreenService, private router: Router, private auth: AuthService) {
     this.name = '';
     this.full_name = '';
   }
-
+  initializeBankInfoForm(): void {
+    this.userBankInformationForm = this.formBuilder.group(
+      {
+        bankName: ['', Validators.required],
+        accountHolderName: ['', Validators.required],
+        accountNumber: ['', [Validators.required]],
+        ifscNumber: ['', [Validators.required]],
+        branchName: ['', [Validators.required]]
+      }
+    );
+  }
+  setBankInfoFormByDefaultValues(): void {
+    this.userBankInformationForm.controls['bankName'].setValue(this.userBankInfo.bank_name);
+    this.userBankInformationForm.controls['accountHolderName'].setValue(this.userDetails.firstName);
+    this.userBankInformationForm.controls['accountNumber'].setValue(this.userBankInfo.account_number);
+    this.userBankInformationForm.controls['ifscNumber'].setValue(this.userBankInfo.ifsc_number);
+    this.userBankInformationForm.controls['branchName'].setValue(this.userBankInfo.branch_name);
+  }
+  getUserBankInfoFromControl(): void {
+    this.userBankInfo.bank_name = this.userBankInformationForm.controls['bankName'].value;
+    this.userBankInfo.account_number = this.userBankInformationForm.controls['accountNumber'].value;
+    this.userBankInfo.ifsc_number = this.userBankInformationForm.controls['ifscNumber'].value;
+    this.userBankInfo.branch_name = this.userBankInformationForm.controls['branchName'].value;
+    this.userBankInfo.account_holder_name = this.userDetails.firstName;
+    this.userBankInfo.bank_detail_id = this.userDetails.bankID;
+  }
+  updateUserBankInfo(): void {
+    this.getUserBankInfoFromControl();
+    this.loadingScreenService.startLoading();
+    this.userService.updateUserBankInfo(this.userBankInfo).subscribe(
+      (response: boolean) => {
+        this.bankDetailsUpdated = response;
+        this.loadingScreenService.stopLoading();
+      }, (err) => {
+        console.log('error occured while updating user bank info', err);
+        this.loadingScreenService.stopLoading();
+      }
+    );
+  }
   ngOnInit() {
     this.isAdmin = false;
     this.isSuperAdmin = false;
+    this.initializeBankInfoForm();
     this.isUser = false;
     this.user_id = this.storage.get('user_id');
     this.clearUploadVariables();
@@ -96,10 +137,24 @@ export class ProfileComponent implements OnInit {
     this.adminMode = false;
     this.kycMode = true;
     this.userDetails = new RegisterUserModel();
+    this.userBankInfo = new UserBankDetails();
     this.getUser();
     this.GetUserRoleInformaion();
   }
 
+  getUserBankInfo(bankID: number): void {
+    this.loadingScreenService.startLoading();
+    this.userService.getUserBankDetails(bankID).subscribe(
+      (response: UserBankDetails) => {
+        this.userBankInfo = response;
+        this.setBankInfoFormByDefaultValues();
+        this.loadingScreenService.stopLoading();
+      }, (err) => {
+        console.log('error occured while fetching user bank info', err);
+        this.loadingScreenService.stopLoading();
+      }
+    );
+  }
 
   get f() { return this.registerForm.controls; }
 
@@ -373,6 +428,7 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserDetails(this.user_id).subscribe((response: RegisterUserModel) => {
       this.loadingScreenService.stopLoading();
       this.userDetails = response;
+      this.getUserBankInfo(this.userDetails.bankID);
     }, (err) => {
       this.loadingScreenService.stopLoading();
       console.log('error occured in profile section', err);
