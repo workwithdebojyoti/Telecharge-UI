@@ -1,0 +1,30 @@
+<!-- <div class="w3-container">
+  <p>Rank Achiever List</p>
+  <div class="row">
+    <div class="col-sm-4"><i class="fa fa-signal"></i></div>
+    <div class="col-sm-4">User Level: </div>
+    <div class="col-sm-4"><span class="pl-5 color-crimson" *ngIf="childrenCount">{{userRank}}</span></div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4"><i class="fa fa-child w3-large"></i></div>
+    <div class="col-sm-4">Children</div>
+    <div class="col-sm-4"><span class="pl-5" *ngIf="childrenCount">{{childrenCount}}</span></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4"><i class="fa fa-users w3-large"></i></div>
+    <div class="col-sm-4">Siblings</div>
+    <div class="col-sm-4"><span class="pl-5" *ngIf="siblingsCount">{{siblingsCount}}</span></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 hand details pointer" (click)="details()"><u>details....</u></div>
+  </div>
+</div> -->
+<div class="w3-container pointer" [routerLink]="['/rank-achiever-list']">
+  <span class="widget-text">Rank : {{userRank}}</span>
+  <p><i class="fa fa-users w3-xxlarge pointer"></i>
+  </p>
+</div>
+<!-- <div class="card">
+  <p><a class="text" style="margin-left: 10px" [routerLink]="['/rank-achiever-list']" title="Rank">Rank : {{userRank}}</a></p>
+</div> -->

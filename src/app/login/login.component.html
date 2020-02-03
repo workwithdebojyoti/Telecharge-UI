@@ -1,0 +1,123 @@
+<div class="w3-row marque-position">
+  <div class="row">
+    <div class="col-6">
+      <a href="http://telecharge.biz" class="w3-bar-item w3-button logo-position"><img src="assets/logo/Logo.png"
+          class="logo" style="width: 160px;height: 90px;" alt="Avatar"></a>
+    </div>
+    <div class="col-6">
+      <div class="address float-right">
+        <table>
+          <tr>
+            <td>Customer Support :</td>
+            <td>+91-8100101025(10am to 7pm)</td>
+          </tr>
+          <tr>
+            <td>Support E-mail :</td>
+            <td>support@telecharge.biz(24x7)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5 animated jackInTheBox bg-shadow" *ngIf="isLogin">
+          <div class="card-body">
+            <h5 class="card-title text-center text-uppercase">Login</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+                <input type="text" id="userid" class="animated form-control" placeholder="User ID" required autofocus>
+                <!-- <label for="userid" class="placeholder">User ID</label> -->
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="password" class="animated form-control" placeholder="Password"
+                  (keydown.enter)="login($event,userid,password)" required>
+                <!-- <label for="password" class="placeholder">Password</label> -->
+              </div>
+
+
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="login($event,userid,password)"
+                type="button">Log in</button>
+              <hr class="my-4">
+              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"
+                (click)="isRegister($event)"><i class="fab fa-google mr-2"></i> Register</button>
+              <br />
+              <span class="login-error animated jackInTheBox" *ngIf="!isLoginSuccess">{{errorMessage}}</span><br />
+            </form>
+          </div>
+        </div>
+        <div class="card card-signin my-5 animated jackInTheBox bg-shadow" *ngIf="!isLogin">
+          <div class="card-body">
+            <h5 class="card-title text-center text-uppercase">REGISTER</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+                <input type="text" id='token' class="animated  form-control" [ngClass]="{'shake': isRegis}" type="text"
+                  appSelectAll placeholder="Token" autofocus required>
+                <!-- <label for="token">Token</label> -->
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="register()"
+                type="button">Validate</button>
+              <hr class="my-4">
+              <button class="btn btn-lg btn-google btn-block text-uppercase" type="button" (click)="isLog_in($event)"><i
+                  class="fab fa-google mr-2"></i> Login</button>
+              <br />
+              <span class="login-error animated jackInTheBox" *ngIf="!isRegisterSuccess">Please provide a
+                token</span><br />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
+  <div class="row">
+
+    <div class="login-reg-panel pt-12" style="margin-top:300px">
+      <div class="register-info-box animated jackInTheBox" [ngClass]="{'show-log-panel': isLogin}">
+        <h2>Don't have an account?</h2>
+        <p>&nbsp;</p>
+        <label id="label-login" for="log-login-show" *ngIf="isLogin" (click)="isRegister($event)">Register</label>
+        <label id="label-register" for="log-reg-show" *ngIf="!isLogin" (click)="isLog_in($event)">Login</label>
+        <input type="radio" name="active-log-panel" id="log-login-show">
+      </div>
+      <div class="white-panel">
+        <div class="login-show animated jackInTheBox card-body" [ngClass]="{'show-log-panel': isLogin}">
+          <h2>LOGIN</h2>
+          <form class="form-signin">
+            <div class="form-label-group">
+              <input #userid class="animated form-control" [ngClass]="{'shake': islog}" type="text" appSelectAll
+                placeholder="User Name" autofocus>
+              <input #password class="animated form-control" [ngClass]="{'shake': islog}" type="password"
+                placeholder="Password" (keydown.enter)="login($event,userid,password)">
+
+
+              <input type="button" class="btn btn-lg btn-primary btn-block text-uppercase"
+                (click)="login($event,userid,password)" value="Login">
+              <a href="">Forgot password?</a><br />
+              <span class="login-error animated jackInTheBox" *ngIf="!isLoginSuccess">{{errorMessage}}</span><br />
+            </div>
+          </form>
+        </div>
+        <div class="register-show  animated jackInTheBox  card-body" [ngClass]="{'show-log-panel': !isLogin}">
+          <h2>REGISTER</h2>
+          <form class="form-signin">
+            <div class="form-label-group">
+              <input #token type="text" class="animated" [ngClass]="{'shake': isRegis}" placeholder="Token">
+
+              <input class="btn btn-lg btn-primary btn-block text-uppercase" (click)="register(token)" type="button"
+                value="Validate">
+              <span class="login-error animated jackInTheBox" *ngIf="!isRegisterSuccess">Please provide a
+                token</span><br />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

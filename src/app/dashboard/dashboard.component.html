@@ -1,0 +1,195 @@
+
+  <div class="w3-row marque-position">
+    <div class="row mb-5">
+      <div class="col-xs-6">
+        <a href="http://telecharge.biz" class="w3-bar-item w3-button logo-position"><img src="assets/logo/Logo.png"
+            class="logo" style="width: 160px;height: 90px;" alt="Avatar"></a>
+      </div>
+      <div class="col-xs-6">
+        <div class="address float-right">
+          <table>
+            <tr>
+              <td>Customer Support :</td>
+              <td>+91-8100101025(10am to 7pm)</td>
+            </tr>
+            <tr>
+              <td>Support E-mail :</td>
+              <td>support@telecharge.biz(24x7)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+      <div class="row">
+          <div class="w3-col m10 pr-17">
+              <app-news-slider></app-news-slider>
+            </div>
+            <div class="w3-col m2">
+              <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4 api-balance-position">
+                <app-balance></app-balance>
+              </div>
+            </div>
+      </div>
+  </div>
+  
+<div class="w3-row main-position">
+  <!-- Left Column -->
+  <div class="w3-col m3">
+    <!-- Profile -->
+    <app-profile></app-profile>
+    <div *ngIf="isSuperAdmin" class="w3-card w3-round w3-white w3-hide-small animated slideInUp">
+      <app-permission></app-permission><br>
+    </div>
+    <div *ngIf="isSuperAdmin" class="w3-card w3-round animated slideInUp">
+      <app-tds-charge></app-tds-charge><br>
+    </div>
+    <div class="w3-card w3-round animated slideInUp w3-card w3-round w3-white">
+      <app-my-payout-report></app-my-payout-report>
+    </div><br>
+    
+    <!-- Alert Box -->
+    <!-- <app-notification></app-notification> -->
+    <!-- End Left Column -->
+  </div>
+
+  <!-- Middle Column -->
+  <div class="w3-col m7">
+
+
+    <div class="w3-row-padding animated slideInUp">
+      <div class="w3-col m12">
+        <div class="w3-card w3-round w3-white">
+          <app-amount-transfer *ngIf='selectedComponetForActionArea === "BALANCE-TRANSFER"'></app-amount-transfer>
+          <app-recharge *ngIf='selectedComponetForActionArea === "RECHARGE"'></app-recharge>
+          <app-wallet *ngIf='selectedComponetForActionArea === "ADD-BALANCE"' [wallet-type]="'add_wallet'"></app-wallet>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="w3-row-padding animated slideInUp">
+      <div *ngIf="isSuperAdmin || isAdmin" class="w3-half w3-margin-bottom animated slideInUp">
+        <div class="w3-card w3-round w3-white">
+          <app-news-update></app-news-update>
+        </div>
+      </div>
+      <div *ngIf="isSuperAdmin" class="w3-half w3-margin-bottom animated slideInUp">
+          <div class="w3-card w3-round w3-white">
+            <app-commission-setting></app-commission-setting>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="w3-row-padding animated slideInUp">
+      <div class="col-6 w3-half w3-margin-bottom">
+        <div class="w3-card w3-round animated slideInUp w3-card w3-round w3-white" style="height: 70px;">
+          <app-wallet-balance-report></app-wallet-balance-report>
+        </div>
+      </div>
+      <!-- Complaint -->
+      <div class="col-3 w3-half w3-margin-bottom animated slideInUp">
+        <div class="w3-card w3-round animated slideInUp w3-card w3-round w3-white">
+          <app-admin-profile></app-admin-profile>
+        </div>
+      </div>
+      <div class="col-3 w3-half w3-margin-bottom animated slideInUp">
+        <div class="w3-card w3-round w3-white w3-hide-small animated slideInUp">
+          <app-rank-achiever-list></app-rank-achiever-list>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="w3-row-padding animated slideInUp">
+      <div class="w3-half w3-margin-bottom animated slideInUp">
+        <div class="w3-card w3-round w3-white">
+          <app-recharge-widget (componentName)="getComponentSelected($event)"></app-recharge-widget>
+        </div>
+      </div>
+      <div class="w3-half w3-margin-bottom animated slideInUp">
+          <div class="w3-card w3-round w3-white">
+              <app-recharge-transaction-report></app-recharge-transaction-report>
+          </div>
+      </div>
+    </div>
+    <div class="w3-row-padding animated slideInUp">
+      <div *ngIf="isSuperAdmin" class="w3-half w3-margin-bottom">
+        <div class="w3-card w3-round w3-white">
+          <app-add-api></app-add-api>
+        </div>
+      </div>
+      <div *ngIf="isSuperAdmin || isAdmin" class="w3-half w3-margin-bottom animated slideInUp">
+          <div class="w3-card w3-round w3-white">
+            <app-api-balance></app-api-balance>
+          </div>
+        </div>
+    </div>
+
+    <div class="w3-row-padding animated slideInUp">
+      <div *ngIf="isSuperAdmin || isAdmin" class="w3-half w3-margin-bottom animated slideInUp">
+        <div class="w3-card w3-round w3-white">
+          <app-wallet-add-approval></app-wallet-add-approval>
+        </div>
+      </div>
+      <div *ngIf="isSuperAdmin || isAdmin" class="w3-half w3-margin-bottom animated slideInUp">
+        <div class="w3-card w3-round w3-white">
+          <app-wallet-withdrawal-approval></app-wallet-withdrawal-approval>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- End Middle Column -->
+  </div>
+
+  <!-- Right Column -->
+  <div class="w3-col m2">
+    <div *ngIf="isSuperAdmin || isAdmin" class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-add-employee></app-add-employee>
+    </div>
+    <div *ngIf="!isEmployee" class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-generate-token></app-generate-token>
+    </div>
+    <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-revive-token></app-revive-token>
+    </div>
+    <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-balance-transfer (componentName)="getComponentSelected($event)"></app-balance-transfer>
+    </div>
+    <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-add-wallet-balance (componentName)="getComponentSelected($event)"></app-add-wallet-balance>
+    </div>
+    <!-- <div *ngIf="isSuperAdmin || isAdmin"
+      class="w3-card w3-round w3-white w3-padding-32 w3-center animated flipInX mb-4">
+      <app-add-wallet-balance-admin></app-add-wallet-balance-admin>
+    </div> -->
+    <div *ngIf="isSuperAdmin || isAdmin" class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-deduct-wallet-balance></app-deduct-wallet-balance>
+    </div>
+    <!-- <div *ngIf="!isEmployee" class="w3-card w3-round w3-white w3-padding-32 w3-center animated flipInX mb-4">
+      <app-wallet-balance-report></app-wallet-balance-report>
+    </div>
+    <div *ngIf="!isEmployee" class="w3-card w3-round w3-white w3-padding-32 w3-center animated flipInX mb-4">
+      <app-recharge-transaction-report></app-recharge-transaction-report>
+    </div> -->
+    <!-- <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-balance-request></app-balance-request>
+    </div> -->
+    <!-- <div *ngIf="isSuperAdmin || isAdmin" class="w3-card w3-round w3-white w3-padding-32 w3-center animated flipInX mb-4"> -->
+    <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4">
+      <app-widthdrawal-request></app-widthdrawal-request>
+    </div>
+    <!-- End Right Column -->
+  </div>
+
+  <!-- End Grid -->
+</div>

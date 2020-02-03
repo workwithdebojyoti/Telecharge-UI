@@ -1,0 +1,9 @@
+.icon-position{
+    position: relative;
+    top: 9px;
+    float: right;
+}
+.widget-text {
+    font-family: cursive;
+    font-weight: 700;
+}

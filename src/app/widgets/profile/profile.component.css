@@ -1,0 +1,31 @@
+.low_balance{
+    color:red;
+}
+
+.high_balance{
+    color:blue;
+}
+.pl-40{
+    padding-left:40px;
+}
+
+.text {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.profile-name{
+     color: #23527c;
+    font-weight: bold;
+}
+
+p {
+    margin-left: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+}
+
+span {
+    margin-left: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+  }

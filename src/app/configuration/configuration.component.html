@@ -1,0 +1,181 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand fa fa-home" style="font-size:48px" [routerLink]="['/dashboard']"></a>
+  <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-link" [ngClass]="{'nav-item active': configMode}"><a (click)='changeView("Registration Info")'>Registration Info</a></li>
+        <li class="nav-link" [ngClass]="{'nav-item active': bonusMode}"><a (click)='changeView("Bonus Info")'>Bonus Info</a></li>
+        <li class="nav-link" [ngClass]="{'nav-item active': bankMode}"><a (click)='changeView("Bank Account")'>Bank Account</a></li>
+        <!-- <li><a href="#">Link</a></li> -->
+      </ul>
+  </div>
+</nav>
+
+<!-- Configuration -->
+<div class="card" *ngIf='configMode'>
+  <h2>
+    Configuration
+  </h2>
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr class="grid-header">
+        <th>FIELDS</th>
+        <th>VALUE</th>
+      </tr>
+    </thead>
+    <ng-container>
+      <tbody>
+        <tr>
+          <td><label>Referal Wallet Balance Deduct Amount</label></td>
+          <td><input type="text" [(ngModel)]="referal_wallet_balance_deduct_amount" title="Rs...."
+              placeholder="Rs...." /></td>
+        </tr>
+        <tr>
+          <td><label>Down Side Direct Numer Of Joinee</label></td>
+          <td><input type="text" [(ngModel)]="down_side_direct_numer_of_joinee" title="Joinee Number..."
+              placeholder="Joinee Number...." /></td>
+        </tr>
+        <!-- <tr>
+          <td><label>Down Side Direct Of Joinee Point</label></td>
+          <td><input type="text" [(ngModel)]="down_side_direct_of_joinee_point" title="Joinee Point..."
+              placeholder="Joinee Point...." /></td>
+        </tr> -->
+        <!-- <tr>
+          <td><label>Point Unit Price</label></td>
+          <td><input type="text" [(ngModel)]="point_unit_price" title="Rs..." placeholder="Rs...." /></td>
+        </tr> -->
+        <tr>
+          <td><label>First Registration Wallet Balance</label></td>
+          <td><input type="text" [(ngModel)]="first_registration_wallet_balance" title="Rs..." placeholder="Rs...." />
+          </td>
+        </tr>
+        <tr>
+          <td><label>Wallet Approvar Role</label></td>
+          <td><input type="text" [(ngModel)]="wallet_approver_role" title="Role..." placeholder="Role...." /></td>
+        </tr>
+        <tr>
+          <td><label>Days within KYC document need to submit.</label></td>
+          <td><input type="number" [(ngModel)]="kyc_submission_days" title="KYC submission days...."
+              placeholder="KYC submission days...." /></td>
+        </tr>
+        <tr>
+          <td><label>First level complaint assignee</label></td>
+          <td><input type="number" [(ngModel)]="firstLevelAssignee" title="First Level Assignee...."
+              placeholder="First Level Assignee...." /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button (click)="submitConfiguration()" class="btn btn-primary float-right">Submit</button></td>
+        </tr>
+
+      </tbody>
+    </ng-container>
+  </table>
+</div>
+
+<!-- Bonus Info -->
+<div *ngIf='bonusMode' class="card">
+  <form [formGroup]="viewBonusInfoForm">
+      <table class="table table-hover table-striped table-bordered">
+        <thead>
+            <tr class="grid-header">
+              <th>Level</th>
+              <th>Referal Bonus</th>
+              <th>Monthly Bonus</th>
+            </tr>
+          </thead>
+          <ng-container *ngIf="levelBonusInfoList && levelBonusInfoList.length>0">
+            <tbody>
+              <tr *ngFor="let info of levelBonusInfoList; let i = index">
+                <td>{{info.introducerLevel}}</td>
+                <!-- <td>{{info.referralBonus}}</td>
+                <td>{{info.monthlyPayout}}</td> -->
+                <td><input type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.referralBonus' [disabled]='false' formControlName="referralAmount"></td>
+                <td><input type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.monthlyPayout' [disabled]='false' formControlName="monthlyAmount"></td>
+                <td><input class="btn btn-primary" type="button" value="Update"
+                  (click) = "updateLevel(info, viewFormControl.referralAmount.value, viewFormControl.monthlyAmount.value, viewFormControl.monthlyAmount, viewFormControl.referralAmount)" [disabled]="!info.validBonus"></td>
+              </tr>
+            <!-- </tr> -->
+            </tbody>
+        </ng-container>
+      <ng-container *ngIf="levelBonusInfoList && levelBonusInfoList.length==0">
+        <tbody>
+          <tr>
+            <td colspan="5">
+              <span>No records to display.</span>
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>
+      </table>
+    
+    </form>
+  
+</div>
+
+<!-- Bank Account Details -->
+
+<div class="card" *ngIf='bankMode'>
+  <div class="card-header" style="color: grey">
+    Banking info
+    <br/>
+    <label style="color: green" *ngIf='bankInfoAdded && formSubmitted'>Bank Info Added succesfully</label>
+    <label style="color: red" *ngIf='!bankInfoAdded && formSubmitted'>Something went wrong</label>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="bankInfoForm">
+      <div class="row">
+        <div class="col">
+          <label> Bank Name: </label> <br/>
+          <input class="form-control" type="text" formControlName="bankName">
+          <small> Enter your bank name</small>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col">
+            <label> Branch Name: </label> <br/>
+            <input class="form-control" type="text" formControlName="bankBranchName">
+            <small> Enter your bank branch name</small>
+          </div>
+          <div class="col">
+              <label> IFSC: </label> <br/>
+              <input class="form-control" type="text" formControlName="ifsCode">
+              <small> Enter IFSC Code</small>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+            <label> Account Number: </label> <br/>
+            <input class="form-control" type="text" formControlName="accountNumber">
+            <small> Enter your 16 digits bank account number</small>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+            <button class="btn btn-primary" [disabled]='bankInfoForm.invalid' (click)='addBankAccount()'> Add </button>
+          </div>
+      </div>
+    </form> 
+  </div>
+  <div class="card-body">
+      <table class="table table-hover table-striped">
+          <thead>
+            <tr class="grid-header">
+              <th>Bank Name</th>
+              <th>Branch Name</th>
+              <th>IFSC Code</th>
+              <th>Account Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let bInfo of bankInfoList'>
+              <td>{{bInfo.bankName}}</td>
+              <td>{{bInfo.branchName}}</td>
+              <td>{{bInfo.ifscCode}}</td>
+              <td>{{bInfo.accountNumber}}</td>
+            </tr>
+          </tbody>
+          </table>
+  </div>
+</div>
+
+

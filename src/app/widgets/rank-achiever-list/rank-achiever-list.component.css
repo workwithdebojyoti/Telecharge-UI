@@ -1,0 +1,38 @@
+
+.details{
+    color:darkcyan;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.info{
+    color:olivedrab;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+p{
+    color: brown;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.color-crimson{
+    color:crimson;
+}
+span {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+a
+{
+    display:block;
+    text-decoration:none;
+}
+.icon-position{
+    position: relative;
+    top: 9px;
+    float: right;
+}
+
+
+.widget-text {
+    font-family: cursive;
+    font-weight: 700;
+}
