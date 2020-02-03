@@ -170,7 +170,7 @@ export class RechargeComponent implements OnInit {
             break;
         }
         this.common.rechargeService(this.rechargeMode, this.rechargeObject).subscribe((innerResponse: any) => {
-          debugger;
+          
           if (innerResponse.status === 'FAILED') {
             this.joloTransactionStatus = 'FAILURE';
           }

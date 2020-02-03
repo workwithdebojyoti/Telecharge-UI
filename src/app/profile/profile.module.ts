@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile.component';
 import { SharedModule } from '../shared-module';
 import { AllProfileModule } from '../all-profile/all-profile.module';
 import { EditProfileModule } from '../edit-profile/edit-profile.module';
+import { CommonControlsModule } from '../common-controls/common-controls.module';
 @NgModule({
     declarations: [ProfileComponent],
     imports: [
@@ -15,7 +16,8 @@ import { EditProfileModule } from '../edit-profile/edit-profile.module';
         ReactiveFormsModule,
         SharedModule,
         AllProfileModule,
-        EditProfileModule
+        EditProfileModule,
+        CommonControlsModule
     ]
 })
 export class ProfileModule { }

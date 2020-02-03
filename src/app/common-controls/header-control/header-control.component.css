@@ -1,1 +1,16 @@
+.menu-spacer {
+    flex: 1 1 auto;
+  }
 
+  .text-cc {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700 rem; 
+    color: black;
+}
+
+.brand-text {
+    font-weight: 700rem; 
+    color: white;
+    font-family: cursive;
+    font-size: x-large;
+}

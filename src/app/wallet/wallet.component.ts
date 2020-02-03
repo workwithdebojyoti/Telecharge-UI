@@ -27,7 +27,6 @@ export class WalletComponent implements OnInit {
   walletTypeInput: string;
   @Input('wallet-type')
   set walletTypeInputValue(value: string) {
-    debugger;
     this.walletTypeInput = value;
   }
   public descendants: boolean;
@@ -133,7 +132,6 @@ export class WalletComponent implements OnInit {
     this.loadingScreenService.startLoading();
     this.route.paramMap.subscribe(params => {
       this.loadingScreenService.stopLoading();
-      debugger;
       this.walletType = params.get('type');
       if (this.walletType === null) {
         this.walletType = this.walletTypeInput;

@@ -256,7 +256,6 @@ export class RegisterComponent implements OnInit {
     this.userService.GetTodayUserJoinCount()
       .subscribe((res: TodayUserJoinCountResponse) => {
         this.loadingScreenService.stopLoading();
-        debugger;
         const x = new Date();
         const y = x.getFullYear().toString().substr(-2);
         let m = (x.getMonth() + 1).toString();
