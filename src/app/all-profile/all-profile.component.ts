@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service/user.service';
 import { LoadingScreenService } from '../services/loading-screen/loading-screen.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
+import { AlertService } from '../services/common.service/alert.service';
 @Component({
   selector: 'app-all-profile',
   templateUrl: './all-profile.component.html',
@@ -19,10 +20,9 @@ export class AllProfileComponent implements OnInit {
   extensionDays: Array<number>;
   loginStatus: string;
   extensionDaysControl = new FormControl('', [Validators.required]);
-  daysExtended: boolean;
   extensionSubmitted: boolean;
   constructor(private userService: UserService, private loadingScreenService: LoadingScreenService,
-    private elementRef: ElementRef) { }
+    private elementRef: ElementRef, private alertService: AlertService) { }
 
   ngOnInit() {
     this.users = new Array<RegisterUserModel>();
@@ -68,6 +68,7 @@ export class AllProfileComponent implements OnInit {
   }
 
   updateKYCTimeLine(): void {
+    debugger;
     if (this.extensionDaysControl.status === 'INVALID') {
       alert('please select for how many days the extension to be');
       return;
@@ -80,7 +81,15 @@ export class AllProfileComponent implements OnInit {
     this.userService.extendKYCSubmissionDate(this.selectedUser.username, this.selectedUser.extendedDate).subscribe(
       (response: boolean) => {
         this.loadingScreenService.stopLoading();
-        this.daysExtended = response;
+        if (response) {
+          this.alertService.confirmationMessage('Success',
+          'KYC submission time line extended successfully',
+          'success', true, false, 'Ok', '', '');
+          this.fetchAllUserDetails();
+        } else {
+          this.alertService.confirmationMessage('Error', 'Something went wrong!',
+      'error', true, false, 'Ok', '', '');
+        }
       }, (err) => {
         console.log(err, 'error occured in kyc submission date extension page');
         this.loadingScreenService.stopLoading();

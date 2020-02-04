@@ -193,3 +193,11 @@ input[type="button"]:hover, button:hover {
 .modal-backdrop {
   z-index: 998;
 }
+
+
+label {
+  margin-left: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600; 
+}
+

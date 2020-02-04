@@ -94,7 +94,7 @@
         </div>
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style='margin-top:10px;'>
           <div class="row">
-            <div class="col-md-3 float-right"><label>ID Proof : </label></div>
+            <div class="col-md-3 float-right"><label>ID Proof : <span class="mandatory-field">*</span></label></div>
             <div class="col-md-3 float-left">
               <div class="form-group">
                 <select class="form-control" id="id-proof" formControlName="idproof"
@@ -121,7 +121,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3 float-right"><label>Address Proof : </label></div>
+            <div class="col-md-3 float-right"><label>Address Proof : <span class="mandatory-field">*</span></label></div>
             <div class="col-md-3 float-left">
               <div class="form-group">
                 <select class="form-control" id="address-proof" formControlName="addressproof"
@@ -151,7 +151,7 @@
           </div>
           <div class="row">
 
-            <div class="col-md-3 float-right"><label>Bank Account Number :</label></div>
+            <div class="col-md-3 float-right"><label>Bank Account Number : <span class="mandatory-field">*</span></label></div>
             <div class="col-md-3 float-left">
               <div class="form-group">
                 <input type="text" formControlName="bankdetails" class="form-control"

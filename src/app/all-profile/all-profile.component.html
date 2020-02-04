@@ -66,7 +66,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;">
         </mat-row>
-        <mat-footer-row *matFooterRowDef="['noData']"></mat-footer-row>
+        <!-- <mat-footer-row *matFooterRowDef="['noData']"></mat-footer-row> -->
       </mat-table>      
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
@@ -104,7 +104,7 @@
           </button>
         </div>
         <div class="modal-body col-sm-12">
-            <div class="row">
+            <!-- <div class="row">
                 <div *ngIf='daysExtended && extensionSubmitted' class='col-sm-12 alert alert-success alert-dismissible'>
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     Days extended successfully.
@@ -113,7 +113,7 @@
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     Days extention failed due some error.
                   </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-xs">
                   <div class="box">

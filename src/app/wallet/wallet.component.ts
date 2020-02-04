@@ -8,7 +8,7 @@ import { AlertService } from '../services/common.service/alert.service';
 import { UserService } from '../services/user.service/user.service';
 import { WalletReportResponse, UserLog, WalletLog, DateLog } from '../models/wallet-balance-report.model';
 import { LoadingScreenService } from '../services/loading-screen/loading-screen.service';
-import { WalletTransaction, RechargeTransaction, Complaint, BankDetails, BankTransaction, TransactionResponse } from '../models/common.model';
+import { WalletTransaction, RechargeTransaction, Complaint, BankDetails, BankTransaction, TransactionResponse, UserBankDetails } from '../models/common.model';
 import { ProfileService } from '../widgets/profile/profile.service';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -17,6 +17,7 @@ import { AuthService } from '../services/auth.service/auth.service';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ConfigurationModel } from '../models/configuration.model';
+import { RegisterUserModel } from '../models/user.model';
 
 @Component({
   selector: 'app-wallet',
@@ -78,6 +79,8 @@ export class WalletComponent implements OnInit {
   public rechargeTransactionDisplayedColumns = [];
   customCalendarSelectedStartDate: Date;
   customCalendarSelectedEndDate: Date;
+  public loggedInUserInfo: RegisterUserModel;
+  bankAccountDetailsPresent: boolean;
   addWalletBalanceForm = new FormGroup({
     transactionID: new FormControl('', Validators.required),
     amount: new FormControl('', Validators.required),
@@ -96,7 +99,7 @@ export class WalletComponent implements OnInit {
     private loadingScreenService: LoadingScreenService, private profileService: ProfileService, private auth: AuthService) { }
   get f() { return this.addWalletBalanceForm.controls; }
   ngOnInit() {
-
+    this.loggedInUserInfo = new RegisterUserModel();
     this.endDate = new Date();
     this.transactionResponseJSON = new TransactionResponse();
     this.ticketCreated = false;
@@ -140,14 +143,31 @@ export class WalletComponent implements OnInit {
       if (this.walletType === 'withdrawal') {
         this.initializeOption();
         this.isWithdrawalWallet = true;
-        this.header = 'Wallet Witdrawal!';
+        this.header = 'Wallet Witdrawal';
+        this.loadingScreenService.startLoading();
+        this.userService.getUserDetails(this.userId).subscribe(
+          (userResponse: RegisterUserModel) => {
+            this.loadingScreenService.stopLoading();
+            this.userService.getUserBankDetails(userResponse.bankID).subscribe(
+              (bankResponse: UserBankDetails) => {
+                debugger;
+                this.bankAccountDetailsPresent = bankResponse.account_number.toString() !== '';
+              }, (errBank) => {
+                console.log('error occured in withdrwal request page!', errBank);
+              }
+            );
+          }, (err) => {
+            console.log('error occured in withdrwal request page!', err);
+            this.loadingScreenService.stopLoading();
+          }
+        );
       }
       // #endregion
       // #region Balance request
       if (this.walletType === 'add_wallet') {
         this.initializeOption();
         this.isAddBalanceRequest = true;
-        this.header = 'Wallet Add!';
+        this.header = 'Wallet Add';
         this.common.fetchBankDetails().subscribe((response: Array<BankDetails>) => {
           this.companyBankAccounts = response;
         });
@@ -155,7 +175,7 @@ export class WalletComponent implements OnInit {
       if (this.walletType === 'deduct') {
         this.initializeOption();
         this.isDeductWallet = true;
-        this.header = 'Deduct amount from user wallet!';
+        this.header = 'Deduct amount from user wallet';
       }
       // #endregion
       if (this.walletType === 'wallettransactionreport') {
@@ -449,7 +469,7 @@ export class WalletComponent implements OnInit {
     this.addWalletBalanceForm.controls.transactionID.clearValidators();
     this.addWalletBalanceForm.controls.transactionID.updateValueAndValidity();
     }
-    if (!this.addWalletBalanceForm.valid) {
+    if (!this.addWalletBalanceForm.valid || !(+this.addWalletBalanceForm.controls.accountNumber.value !== -1)) {
       alert('The form is invalid!');
       this.addWalletBalanceForm.reset();
       return;

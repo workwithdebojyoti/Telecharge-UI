@@ -83,7 +83,10 @@ display:block; }
         margin-left: 5px;
     }
 
-    
+    .mandatory-field {
+        color: red;
+        font-weight: 500;
+    }   
   
     a, label {
         margin-left: 5px;

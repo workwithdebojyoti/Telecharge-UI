@@ -1,26 +1,28 @@
 <div class="container-fluid">
     <app-header-control *ngIf="!isAddBalanceRequest"></app-header-control>
   
-  <div class="row" *ngIf="isWithdrawalWallet">
+  <div class="row card" *ngIf="isWithdrawalWallet">
     <div class="card-header">
-      <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a>
-      <span>{{header}}</span>
+      <!-- <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a> -->
+      <label>{{header}}</label>
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col">
-          <span>Why you want to widthdraw the balance?</span>
+        <div class="col-md-3">
+            <label>Why you want to widthdraw the balance?</label>
+        </div>
+        <div class="col-md-6">
+          <textarea class='form-control' rows="4" #comment title="Comment...." placeholder="Reason for closing the account."></textarea><br>
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <textarea class='form-control' rows="4" #comment title="Comment...." placeholder="Comment...."></textarea><br>
+          <div class="col-md-3">
+              <input type="submit" class="btn btn-primary float-left" (click)="widthdraw(comment)" [disabled]='!bankAccountDetailsPresent'>
+            </div>
+        <div class="col-md-9" *ngIf='!bankAccountDetailsPresent'>
+          <label class="warning"> Bank account information is not present with us, please submit bank account information first.</label>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <input type="submit" class="btn btn-primary float-right" (click)="widthdraw(comment)">
-        </div>
+        
       </div>
     </div>
   </div>
@@ -83,22 +85,25 @@
       <span>{{header}}</span>
     </div> -->
     <div class="row">
-            <p><strong class="ml-4">{{header}}</strong></p>
+            
     </div>
     
-    <div class="row">
+    <div class="row card">
+        <div class="card-header">
+            <label>{{header}}</label>
+        </div>
         <div class="card-body">
             <form [formGroup]="addWalletBalanceForm">
-              <div class="row">
-                <div class="col-sm-12 col-md-3">
-                  <div class="text">How much amount you need?</div>
-                  <input class="form-control" type="number" name="amount" formControlName="amount" min="0" title="Rs...." placeholder="Rs....">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <div class="col-md-6 text">How much amount you need?</div>
+                  <input class="col-md-6 form-control" type="number" name="amount" formControlName="amount" min="0" title="Rs...." placeholder="Rs....">
                 </div>
               </div>
-              <div class="row">
-                  <div class="col-sm-12 col-md-3">
-                      <div class="text">Comment</div>
-                      <textarea class="form-control" rows="1" cols="80" title="Comment...." placeholder="Comment...." name="comment"
+              <div class="row mb-3">
+                  <div class="col-md-12">
+                      <span class="col-md-6 text">Comment : </span>
+                      <textarea class="col-md-6 form-control" rows="2" cols="50" title="Comment...." placeholder="Comment...." name="comment"
                         formControlName="comment"></textarea>
                   </div>
               </div>
@@ -109,19 +114,18 @@
                 
               </div> -->
               <div class="row" *ngIf="role_id === 1">
-                <div class="col-sm-3">
-                  <span class="text">Bank account</span>
-                  <select class="form-control text" id="user" name="bankAccount" formControlName="accountNumber">
-                    <option [value]="-1">Select Account</option>
+                <div class="col-md-12 mb-3">
+                  <span class="col-md-6 text">Bank account : </span>
+                  <select class="col-md-6 form-control text" id="user" name="bankAccount" formControlName="accountNumber">
+                    <option [value]="-1">--</option>
                     <ng-container *ngIf="companyBankAccounts && companyBankAccounts.length>0">
                       <option *ngFor="let ba of companyBankAccounts" [value]="ba.accountNumber">{{ba.accountNumber}}</option>
                     </ng-container>
                   </select>
                 </div>
-                <div class="col-sm-3">
-                  <span class="text">Transaction ID</span>
-                  <br />
-                  <input class="form-control" type="text" name="transactionID" formControlName="transactionID">
+                <div class="col-md-12 mb-3">
+                  <span class="col-md-6 text">Transaction ID : </span>
+                  <input class="col-md-6 form-control" type="text" name="transactionID" formControlName="transactionID">
                 </div>
               </div>
               <br />
@@ -335,25 +339,6 @@
         </div>
       </div>
       <div>
-        <!-- <div class="row" style="margin-top: 10px">
-          <div class="col">
-            <span class="text-bold">Start Date : </span>
-            <app-custom-date-picker [date]='customCalendarSelectedStartDate'
-              (selectedDate)='getSelectedStartDate($event)'></app-custom-date-picker>
-          </div>
-          <div class="col">
-            <span class="text-bold">End Date : </span>
-            <app-custom-date-picker [date]='customCalendarSelectedEndDate' (selectedDate)='getSelectedEndDate($event)'>
-            </app-custom-date-picker>
-          </div>
-          <div class="col-sm-2">
-            <div class="input-group">
-              <br />
-              <button class="btn btn-primary float-right form-control" style="margin-bottom: 10px"
-                (click)="fetchUserTransaction()">Report</button>
-            </div>
-          </div>
-        </div> -->
       </div>
       <div class="card">
         <!-- <div class="card-header">Recharge Transaction</div> -->
@@ -409,10 +394,6 @@
           <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
             <mat-cell *matCellDef="let row"> 
-              <!-- <button class="btn-custom" type="submit"
-                (click)='editTransactionRowData(row)' data-toggle="modal" data-target='#complainModal'>Complain</button> -->
-                <!-- <button class="btn-custom" type="submit"
-                (click)='viewDetailsTransaction(row)' data-toggle="modal" data-target='#detailsModal'>Details</button> -->
                 <i class='fas fa-thumbs-down margin-custom' style='font-size:24px' (click)='editTransactionRowData(row)' data-toggle="modal" data-target='#complainModal' ></i>
                 <i class="fa fa-eye margin-custom" style="font-size:24px" (click)='viewDetailsTransaction(row)' data-toggle="modal" data-target='#detailsModal' ></i>
             </mat-cell>
@@ -428,7 +409,7 @@
           <mat-header-row *matHeaderRowDef="rechargeTransactionDisplayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: rechargeTransactionDisplayedColumns;">
           </mat-row>
-          <mat-footer-row *matFooterRowDef="['noData']"></mat-footer-row>
+          <!-- <mat-footer-row *matFooterRowDef="['noData']"></mat-footer-row> -->
         </mat-table>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </div>

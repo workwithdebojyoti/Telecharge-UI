@@ -107,3 +107,8 @@ display:block; }
     margin-right: 10px;
     margin-left: 10px;
 }
+
+.warning {
+    color: red;
+    font-weight: 500;
+}

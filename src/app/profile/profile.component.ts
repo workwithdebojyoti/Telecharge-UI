@@ -19,6 +19,7 @@ import { AddressProof } from '../models/addressproof.model';
 import { IdProof } from '../models/idproof.model';
 import { AuthService } from '../services/auth.service/auth.service';
 import { BankDetails, UserBankDetails } from '../models/common.model';
+import { AlertService } from '../services/common.service/alert.service';
 
 @Component({
   selector: 'app-profile',
@@ -82,7 +83,8 @@ export class ProfileComponent implements OnInit {
   kycSubmitted: boolean;
   constructor(private common: CommonService, private profileService: ProfileService, private formBuilder: FormBuilder,
     @Inject(LOCAL_STORAGE) private storage: WebStorageService, private data: DataService, private userService: UserService,
-    private loadingScreenService: LoadingScreenService, private router: Router, private auth: AuthService) {
+    private loadingScreenService: LoadingScreenService, private router: Router, private auth: AuthService,
+    private alertService: AlertService) {
     this.name = '';
     this.full_name = '';
   }
@@ -313,6 +315,8 @@ export class ProfileComponent implements OnInit {
   public onSubmit() {
     this.submitted = true;
     if (this.registerForm.invalid) {
+      this.alertService.confirmationMessage('Error', 'Something went wrong!',
+      'error', true, false, 'Ok', '', '');
       return;
     }
 
@@ -376,11 +380,11 @@ export class ProfileComponent implements OnInit {
 
   private initiateRegitrationForm() {
     this.registerForm = this.formBuilder.group({
-      idproof: ['0'],
-      uploaddocumentid: [''],
-      addressproof: ['0'],
-      uploaddocumentaddress: [''],
-      bankdetails: [''],
+      idproof: ['', Validators.required],
+      uploaddocumentid: ['', Validators.required],
+      addressproof: ['', Validators.required],
+      uploaddocumentaddress: ['', Validators.required],
+      bankdetails: ['', Validators.required],
     });
     forkJoin(this.userService.getKYC(this.user_id), this.common.getIdProof(),
       this.common.getAddressProof())
