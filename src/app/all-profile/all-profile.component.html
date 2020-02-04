@@ -47,11 +47,11 @@
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef > Action </mat-header-cell>
           <mat-cell *matCellDef="let row"> 
-            <i class="fas fa-edit" (click)='editUserRowData(row)'
-            data-toggle="modal" data-target='#editModal'></i>
+            <i class="fas fa-edit pointer" (click)='editUserRowData(row)'
+            data-toggle="modal" data-target='#editModal' title="Edit"></i>
             <!-- <button class="btn btn-primary" type="submit" (click)='extendKYCTimeLine(row)'
               data-toggle="modal" data-target='#extendKYC'><i class="fas fa-angle-double-right"></i></button> -->
-              <i class="fas fa-angle-double-right" (click)='extendKYCTimeLine(row)' data-toggle="modal" data-target='#extendKYC'></i>
+              <i class="fas fa-angle-double-right pointer" title="Extend KYC" (click)='extendKYCTimeLine(row)' data-toggle="modal" data-target='#extendKYC'></i>
           </mat-cell>
 
          

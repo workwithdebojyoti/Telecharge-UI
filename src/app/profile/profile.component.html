@@ -88,12 +88,14 @@
     </div>
     <br/>
     <div class="row w3-card w3-round w3-white animated flipInX pt-6">
-      <div class="w3-container">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-          <h2>KYC Information</h2>
+      <div class="container-fluid">
+        <div class="card-header">
+          <label>KYC Information</label>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style='margin-top:10px;'>
           <div class="row">
-            <div class="col-md-2 float-right"><label>ID Proof</label></div>
-            <div class="col-md-4 float-left">
+            <div class="col-md-3 float-right"><label>ID Proof : </label></div>
+            <div class="col-md-3 float-left">
               <div class="form-group">
                 <select class="form-control" id="id-proof" formControlName="idproof"
                   (change)="onIdProofChanged($event)">
@@ -103,8 +105,8 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-2 float-right"><label>Upload document</label></div>
-            <div class="col-md-4 float-left">
+            <div class="col-md-3 float-right"><label>Upload document</label></div>
+            <div class="col-md-3 float-left">
               <div class="form-group">
                 <input #fileId type="file" accept=".pdf" (change)="uploadIdProof(fileId.files)"
                   formControlName="uploaddocumentid" class="form-control no-border"
@@ -119,8 +121,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-2 float-right"><label>Address Proof</label></div>
-            <div class="col-md-4 float-left">
+            <div class="col-md-3 float-right"><label>Address Proof : </label></div>
+            <div class="col-md-3 float-left">
               <div class="form-group">
                 <select class="form-control" id="address-proof" formControlName="addressproof"
                   (change)="onAddressProofChanged($event)">
@@ -131,8 +133,8 @@
                 <!-- <div *ngIf="f.addressproof.errors.required">Address Proof is required</div> -->
               </div>
             </div>
-            <div class="col-md-2 float-right"><label>Upload document</label></div>
-            <div class="col-md-4 float-left">
+            <div class="col-md-3 float-right"><label>Upload document</label></div>
+            <div class="col-md-3 float-left">
               <div class="form-group">
                 <input #fileAddress type="file" accept=".pdf" (change)="uploadAddressProof(fileAddress.files)"
                   formControlName="uploaddocumentaddress" class="form-control no-border"
@@ -149,8 +151,8 @@
           </div>
           <div class="row">
 
-            <div class="col-md-2 float-right"><label>Bank Details</label></div>
-            <div class="col-md-4 float-left">
+            <div class="col-md-3 float-right"><label>Bank Account Number :</label></div>
+            <div class="col-md-3 float-left">
               <div class="form-group">
                 <input type="text" formControlName="bankdetails" class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.bankdetails.errors }" />
@@ -160,10 +162,15 @@
               </div>
             </div>
           </div>
-          <div class="col-md-10 float-left" style="margin-bottom: 30px;">
-            <div class="form-group float-left">
-              <button class="btn btn-primary">Submit</button>
-            </div>
+          
+          <div class="row" *ngIf='kycSubmitted'>
+              <div class="col-md-6 float-left" style="margin-bottom: 30px;">
+                  <div class="form-group float-left">
+                    <button class="btn btn-primary">Submit</button>
+                    <p class="success-text">KYC details already submitted.</p>
+                  </div>
+              </div>
+              
           </div>
         </form>
       </div>

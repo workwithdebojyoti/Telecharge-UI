@@ -79,6 +79,7 @@ export class ProfileComponent implements OnInit {
   bankDetailsUpdated: boolean;
   public userBankInfo: UserBankDetails;
   public userBankInformationForm: FormGroup;
+  kycSubmitted: boolean;
   constructor(private common: CommonService, private profileService: ProfileService, private formBuilder: FormBuilder,
     @Inject(LOCAL_STORAGE) private storage: WebStorageService, private data: DataService, private userService: UserService,
     private loadingScreenService: LoadingScreenService, private router: Router, private auth: AuthService) {
@@ -384,6 +385,7 @@ export class ProfileComponent implements OnInit {
     forkJoin(this.userService.getKYC(this.user_id), this.common.getIdProof(),
       this.common.getAddressProof())
       .subscribe(([responsekyc, responseIdProof, responseAddressProof]) => {
+        this.kycSubmitted = responsekyc.list.length === 1;
         this.idProofs = responseIdProof;
         this.addressProofs = responseAddressProof;
         this.registerForm.controls['uploaddocumentid'].disable();
