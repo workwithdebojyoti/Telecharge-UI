@@ -84,16 +84,22 @@
               <th>Level</th>
               <th>Referal Bonus</th>
               <th>Monthly Bonus</th>
+              <th>Number Of Installment To Pay</th>
+              <th>Action</th>
             </tr>
           </thead>
           <ng-container *ngIf="levelBonusInfoList && levelBonusInfoList.length>0">
             <tbody>
               <tr *ngFor="let info of levelBonusInfoList; let i = index">
                 <td>{{info.introducerLevel}}</td>
-                <td><input class="form-control col-md-4" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.referralBonus' [disabled]='false' formControlName="referralAmount"></td>
-                <td><input class="form-control col-md-4" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.monthlyPayout' [disabled]='false' formControlName="monthlyAmount"></td>
-                <td><input class="btn btn-primary" type="button" value="Update"
-                  (click) = "updateLevel(info, viewFormControl.referralAmount.value, viewFormControl.monthlyAmount.value, viewFormControl.monthlyAmount, viewFormControl.referralAmount)" [disabled]="!info.validBonus"></td>
+                <td><input class="form-control col-md-3" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.referralBonus' [disabled]='false' formControlName="referralAmount"></td>
+                <td><input class="form-control col-md-3" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.monthlyPayout' [disabled]='false' formControlName="monthlyAmount"></td>
+                <td><input class="form-control col-md-3" type='number' (change) ='checkValidNumber(info)' [(value)] = 'info.numberOfInstallmentToPay' [disabled]='false' formControlName="installmentToPay"></td>
+                <td>
+                  <i class="fas fa-edit pointer" title="Update" 
+                  (click) = "updateLevel(info, viewFormControl.referralAmount.value, viewFormControl.monthlyAmount.value,viewFormControl.installmentToPay.value, viewFormControl.monthlyAmount, viewFormControl.referralAmount)"></i>
+                  
+                  </td>
               </tr>
             <!-- </tr> -->
             </tbody>
@@ -146,7 +152,7 @@
           <div class="col">
             <label> Account Number: </label> <br/>
             <input class="form-control" type="text" formControlName="accountNumber">
-            <small> Enter your 16 digits bank account number</small>
+            <small> Enter your 9-18 digits bank account number</small>
           </div>
       </div>
       <div class="row">
@@ -164,15 +170,18 @@
               <th>Branch Name</th>
               <th>IFSC Code</th>
               <th>Account Number</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor='let bInfo of bankInfoList'>
+            <tr *ngFor='let bInfo of bankInfoList; index as i'>
               <td>{{bInfo.bankName}}</td>
               <td>{{bInfo.branchName}}</td>
               <td>{{bInfo.ifscCode}}</td>
               <td>{{bInfo.accountNumber}}</td>
+              <td><i class="fa fa-trash pointer" aria-hidden="true" (click)='removeCompanyBankDetails(i)'></i></td>
             </tr>
+            <tr *ngIf='bankInfoList.length === 0' class="text-danger">No Bank Info Present</tr>
           </tbody>
           </table>
   </div>

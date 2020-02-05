@@ -477,5 +477,12 @@ public removeCommissionSetting(cs: CommissionSetting): Observable<boolean> {
   const mainURL = this.apiUrlService.getFullURL('REMOVE_COMMISSION_SETTING', {});
   return this.baseService.post(mainURL, cs, true);
 }
-
+public removeCompanyBankInfo(ifscCode: string, bankName: string): Observable<boolean> {
+  const urlStringObject = {
+    ifscCode: ifscCode,
+    bankName: bankName
+  };
+  const mainURL = this.apiUrlService.getFullURL('ADMIN_BANK_INFO_REMOVE', urlStringObject);
+  return this.baseService.post(mainURL, {}, true);
+}
 }

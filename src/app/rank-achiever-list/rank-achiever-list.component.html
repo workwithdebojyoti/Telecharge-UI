@@ -1,39 +1,14 @@
 <div class="w3-row marque-position">
-  <div class="row">
-    <div class="col-6">
-      <a href="#" class="w3-bar-item w3-button logo-position" routerLink="/dashboard"><img src="assets/logo/Logo.png"
-          class="logo" style="width: 160px;height: 90px;" alt="Avatar"></a>
-    </div>
-    <div class="col-6">
-      <div class="w3-card w3-round w3-white w3-center animated flipInX mb-4 api-balance-position">
-        <!-- Logout -->
-        <a class="w3-bar-item w3-button  w3-right w3-hover-white font-large w3-theme-d2 position mobileshow"
-          title="Logout" (click)="logout()"><i class="fa fa-sign-out pointer"></i></a>
-        <a class="float-right header-item pointer font-large header-item font-size-20" title="Logout"
-          (click)="logout()"><i class="fa fa-sign-out"> Logout</i></a>
-      </div>
-      <div class="address float-right">
-        <table>
-          <tr>
-            <td>Customer Support :</td>
-            <td>+91-8100101025(10am to 7pm)</td>
-          </tr>
-          <tr>
-            <td>Support E-mail :</td>
-            <td>support@telecharge.biz(24x7)</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
+  <app-header-control></app-header-control>
 
-  <p *ngIf="role_id === 4" class="container">
+  <p *ngIf="role_id === 4" class="container-fluid">
     <input type="radio" [value]="self" name="viewMode" (change)="changeView('self')" [checked]='true'> Self View
     <input type="radio" [value]="admin" name="viewMode" (change)="changeView('admin')"> Admin View
   </p>
+  <!-- Self View -->
   <div class="card" *ngIf="viewMode==='self'">
     <div class="card-header">
-      <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a>
+      <!-- <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a> -->
       <span>Rank Hierarchy</span>
     </div>
     <div class="card-body">
@@ -69,7 +44,7 @@
           <tbody>
             <tr>
               <td colspan="8">
-                <span>No records to display.</span>
+                <span class="text-danger">No records to display.</span>
               </td>
             </tr>
           </tbody>
@@ -108,13 +83,13 @@
           <tbody>
             <tr>
               <td colspan="8">
-                <span>No records to display.</span>
+                <span class="text-danger">No records to display.</span>
               </td>
             </tr>
           </tbody>
         </ng-container>
       </table>
-
+      <!-- Children Info-->
       <div *ngIf='children.length > 0'>
         <h3>Children Information</h3>
         <table class="table table-hover table-striped table-bordered">
@@ -148,14 +123,14 @@
             <tbody>
               <tr>
                 <td colspan="8">
-                  <span>No records to display.</span>
+                  <span class="text-danger">No records to display.</span>
                 </td>
               </tr>
             </tbody>
           </ng-container>
         </table>
       </div>
-      <hr>
+      <!-- Siblings Info-->
       <div *ngIf="siblings.length > 0">
         <h3>Siblings Information</h3>
         <table class="table table-hover table-striped table-bordered">
@@ -189,7 +164,7 @@
             <tbody>
               <tr>
                 <td colspan="8">
-                  <span>No records to display.</span>
+                  <span class="text-danger">No records to display.</span>
                 </td>
               </tr>
             </tbody>
@@ -197,51 +172,46 @@
         </table>
       </div>
     </div>
-    <!--Admin View-->
-    <div class="container-fluid" *ngIf="viewMode==='admin'">
-      <div>
-        <div *ngIf='rankAchievers.length > 0'>
-          <h3>Children Information</h3>
-          <table class="table table-hover table-striped table-bordered">
-            <thead>
-              <tr class="grid-header">
-                <th>USER NAME</th>
-                <th>FIRST NAME</th>
-                <th>LAST NAME</th>
-                <!-- <th>MOBILE NUMBER</th> -->
-                <!-- <th>GENDER</th> -->
-                <!-- <th>ROLE NAME</th> -->
-                <!-- <th>EMAIL</th> -->
-                <!-- <th>DOB</th> -->
-                <th>User Rank</th>
-                <th>RankAchievementDate</th>
-                <th>JoiningDate</th>
-              </tr>
-            </thead>
-            <ng-container *ngIf="rankAchievers.length>0">
-              <tbody>
-                <tr *ngFor='let achiever of rankAchievers'>
-                  <td>{{achiever.userName}}</td>
-                  <td>{{achiever.firstName}}</td>
-                  <td>{{achiever.lastName}}</td>
-                  <td>{{achiever.userRank}}</td>
-                  <td>{{achiever.rankAchievementDate | date: 'dd-MMM-yyyy'}}</td>
-                  <td>{{achiever.joiningDate | date: 'dd-MMM-yyyy'}}</td>
-                </tr>
-              </tbody>
-            </ng-container>
-            <ng-container *ngIf="rankAchievers.length==0">
-              <tbody>
-                <tr>
-                  <td colspan="8">
-                    <span>No records to display.</span>
-                  </td>
-                </tr>
-              </tbody>
-            </ng-container>
-          </table>
-        </div>
-      </div>
+  </div>
+  <!--Admin View-->
+  <div class="card" *ngIf="viewMode === 'admin'">
+    <div class="card-header">
+        <!-- <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a> -->
+        <span>Rank Achievers</span>
     </div>
+    <table class="table table-hover table-striped table-bordered">
+      <thead>
+        <tr class="grid-header">
+          <th>USER NAME</th>
+          <th>FIRST NAME</th>
+          <th>LAST NAME</th>
+          <th>User Rank</th>
+          <th>RankAchievementDate</th>
+          <th>JoiningDate</th>
+        </tr>
+      </thead>
+      <ng-container *ngIf="rankAchievers.length>0">
+        <tbody>
+          <tr *ngFor='let achiever of rankAchievers'>
+            <td>{{achiever.userName}}</td>
+            <td>{{achiever.firstName}}</td>
+            <td>{{achiever.lastName}}</td>
+            <td>{{achiever.userRank}}</td>
+            <td>{{achiever.rankAchievementDate | date: 'dd-MMM-yyyy'}}</td>
+            <td>{{achiever.joiningDate | date: 'dd-MMM-yyyy'}}</td>
+          </tr>
+        </tbody>
+      </ng-container>
+      <ng-container *ngIf="rankAchievers.length==0">
+        <tbody>
+          <tr>
+            <td colspan="8">
+              <span class="text-danger">No records to display.</span>
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>
+    </table>
+
   </div>
 </div>

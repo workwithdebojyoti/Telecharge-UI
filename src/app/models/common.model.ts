@@ -45,6 +45,7 @@ export class IntroducerBonus {
     referralBonus: number;
     monthlyPayout: number;
     validBonus: boolean;
+    numberOfInstallmentToPay: number;
     constructor() {
         this.validBonus = false;
     }

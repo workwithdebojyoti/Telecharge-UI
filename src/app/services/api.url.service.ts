@@ -72,7 +72,7 @@ export class ApiUrlService extends BaseURLService {
       LEVEL_BONUS_INFO: `User/levelbonusinfo`,
       LEVEL_BONUS_INFO_UPDATE: `User/levelbonusinfo/update`,
       ADMIN_BANK_INFO: `common/bankinfo`,
-      ADMIN_BANK_INFO_REMOVE: `common/bankinfo/remove`,
+      ADMIN_BANK_INFO_REMOVE: `common/bankinfo/remove/{ifscCode}/{bankName}`,
       RECHARGE_TRANSACTION_USER: `RechargeAPI/api/transaction/user/{userID}/from/{endDate}/to/{startDate}`,
       RECHARGE_TRANSACTION: `RechargeAPI/api/transaction/from/{endDate}/to/{startDate}`,
       RECHARGE_COMPALINT: `RechargeAPI/api/transaction/complaint`,

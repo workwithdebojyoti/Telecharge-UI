@@ -123,6 +123,7 @@ export class WalletComponent implements OnInit {
     this.selectedUser = {};
     this.selectedTransactionRowdata = new RechargeTransaction();
     this.selectedUserID = this.userId;
+    
     this.bankTransaction = new BankTransaction();
     this.ticketPriorityList = [{ priority: 3, text: 'High' },
     { priority: 2, text: 'Medium' },
@@ -198,6 +199,9 @@ export class WalletComponent implements OnInit {
         this.getWalletTransactionReportByUser(this.userId, this.startDate, this.endDate);
       }
       if (this.walletType === 'rechargetransactionreport') {
+        if ( this.role_id === 4) {
+          this.selectedUserID = -1;
+        }
         this.initializeOption();
         this.isRechargetransactionReport = true;
         this.datelogs = [];
@@ -212,7 +216,7 @@ export class WalletComponent implements OnInit {
           this.isSuperAdmin = true;
           this.fetchAllRechargeTransaction();
           this.rechargeTransactionDisplayedColumns =
-            ['transactionID', 'transactionDate', 'serviceNumber',
+            ['transactionID', 'userID', 'transactionDate', 'serviceNumber',
               'transactionMode', 'transactionAmount',
               'transactionStatus', 'transactionMessage', 'action'];
         } else {
@@ -230,6 +234,7 @@ export class WalletComponent implements OnInit {
     this.loadingScreenService.startLoading();
     this.profileService.GetUser(this.user_name).subscribe(
       (response: any) => {
+        debugger;
         if (response !== null) {
           this.selectedUser = response;
           this.name = this.selectedUser.first_name + ' ' + this.selectedUser.last_name;
@@ -351,8 +356,13 @@ export class WalletComponent implements OnInit {
   }
 
   public fetchUserTransaction(): void {
+    debugger;
     if (this.isSuperAdmin) {
-      this.fetchUserRechargeTransaction(this.selectedUserID);
+      if (+this.selectedUserID === -1) {
+        this.fetchAllRechargeTransaction();
+      } else {
+        this.fetchUserRechargeTransaction(this.selectedUserID);
+      }
     } else {
       this.fetchUserRechargeTransaction(this.userId);
     }
@@ -455,9 +465,21 @@ export class WalletComponent implements OnInit {
   // #endregion
   /** Deduct balance for admin - from user account selected */
   public deductBalanceFromUser(comment: any, amount: any): void {
-    this.common.deductBalanceTransaction(this.userId.toString(), amount.value, comment.value).subscribe(
+    this.loadingScreenService.startLoading();
+    this.common.deductBalanceTransaction(this.selectedUser.user_id.toString(), amount.value, comment.value).subscribe(
       (response: any) => {
-        console.log(response);
+        this.loadingScreenService.stopLoading();
+        if (response) {
+          this.alertService.confirmationMessage('Success',
+          'Amount has been deducted successfully',
+          'success', true, false, 'Ok', '', '');
+        } else {
+          this.alertService.confirmationMessage('Error', 'Something went wrong!',
+      'error', true, false, 'Ok', '', '');
+        }
+      }, (err) => {
+        this.loadingScreenService.stopLoading();
+        console.log('error occured while deducting balance from user', err);
       }
     );
   }

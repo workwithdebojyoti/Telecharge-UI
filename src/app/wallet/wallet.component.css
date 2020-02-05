@@ -33,7 +33,7 @@ pointer-events: none;
 }
 
 .text {
-    font-family: sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
 }
 
@@ -54,15 +54,15 @@ pointer-events: none;
     font-size: 12px;
     background-color:#1a2138;
     color: white;
-    font-family: sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .card-header {
     font-weight: bold;
     font-size: 20px;
-    font-family: sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .text-bold {
-    font-family: sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
     font-weight: bold;
 }

@@ -27,18 +27,19 @@
     </div>
   </div>
   <!-- Wallet deduction Admin-->
-  <div class="row" *ngIf="isDeductWallet">
+  <div class="row card" *ngIf="isDeductWallet">
     <div class="card-header">
-      <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a>
-      <span>{{header}}</span>
+      <!-- <a class="navbar-brand fa fa-home" style="font-size:48px;color: black;" [routerLink]="['/dashboard']"></a> -->
+      <label>{{header}}</label>
+      
     </div>
     <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <span class="text">User account from which amount will be deducted</span>
-          <select class="form-control text" id="user" #user [(ngModel)]="user_name"
+      <div class="row mb-3">
+        <div class="col-md-9">
+          <span class="col-md-6 text">User account from which amount will be deducted :</span>
+          <select class="col-md-3 form-control text" id="user" #user [(ngModel)]="user_name"
             (change)='deductWalletBalanceUserIDChange()'>
-            <option [value]="-1">Select User</option>
+            <!-- <option [value]="-1">Select User</option> -->
             <ng-container *ngIf="users && users.length>0">
               <option *ngFor="let user of users" [value]="user.user_name">{{user.user_name}}</option>
             </ng-container>
@@ -46,27 +47,26 @@
         </div>
         <br />
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="text">User Name</div>
-          <input *ngIf='selectedUser' type="text" [value]="name" disabled>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <div class="text">User Name :</div>
+          <input class="form-control" *ngIf='selectedUser' type="text" [value]="name" disabled>
         </div>
-        <div class="col">
-          <div class="text">User Mobile Number</div>
-          <input *ngIf='selectedUser' type="text" [value]="selectedUser.mobile_number" disabled>
+        <div class="col-md-4">
+          <div class="text">User Mobile Number :</div>
+          <input class="form-control" *ngIf='selectedUser' type="text" [value]="selectedUser.mobile_number" disabled>
         </div>
-      </div>
-      <div class='row'>
-        <div class="col">
-          <div>
-            <div class="text">Amount to deduct</div>
-            <input type="number" #amount min="0" title="Rs...." placeholder="Rs....">
+        <div class="col-md-4">
+            <div>
+              <div class="text">Amount to deduct :</div>
+              <input class="form-control" type="number" #amount min="0" title="Rs...." placeholder="Rs....">
+            </div>
           </div>
-        </div>
       </div>
+     
 
       <div class="row">
-        <div class="col">
+        <div class="col-md-4">
           <div class="text">Why you want to deduct the balance?</div>
           <textarea class='form-control' rows="4" #comment title="Comment...." placeholder="Comment...."></textarea><br>
         </div>
@@ -84,9 +84,6 @@
     <!-- <div class="card-header">
       <span>{{header}}</span>
     </div> -->
-    <div class="row">
-            
-    </div>
     
     <div class="row card">
         <div class="card-header">
@@ -162,7 +159,7 @@
               <span class="text-bold">Users</span>
               <select class="form-control" id="user" #user [(ngModel)]="userId"
                 (change)="changeUser($event, user.value)">
-                <option [value]="-1">Select User</option>
+                <!-- <option [value]="-1">Select User</option> -->
                 <ng-container *ngIf="users && users.length>0">
                   <option *ngFor="let user of users" [value]="user.user_id">{{user.user_name}}</option>
                 </ng-container>
@@ -313,7 +310,7 @@
             <span class="text-bold">Users : </span>
             <select class="form-control" id="user" #user [(ngModel)]="selectedUserID"
               (change)="changeUser($event, user.value)">
-              <option [value]="-1">Select User</option>
+              <option [value]="-1">All User</option>
               <ng-container *ngIf="users && users.length>0">
                 <option *ngFor="let user of users" [value]="user.user_id">{{user.user_name}}</option>
               </ng-container>
@@ -345,9 +342,13 @@
         <mat-table class="card-body" [dataSource]="dataSourceForRechargeTransaction" matSort>
           <!-- Transaction ID Column -->
           <ng-container matColumnDef="transactionID" style="width: 5%">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.transactionID}} </mat-cell>
           </ng-container>
+          <ng-container matColumnDef="userID" style="width: 5%">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>User ID </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.userID}} </mat-cell>
+            </ng-container>
 
           <!-- Transaction Date Column -->
           <ng-container matColumnDef="transactionDate">
@@ -382,7 +383,7 @@
           </ng-container>
 
           <!-- Transaction Type Column -->
-          <ng-container matColumnDef="transactionMessage">
+          <ng-container matColumnDef="transactionMessage" class ="text-wrap">
             <mat-header-cell *matHeaderCellDef> Transaction </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.transactionMessage}} </mat-cell>
           </ng-container>

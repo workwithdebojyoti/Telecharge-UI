@@ -49,7 +49,8 @@ export class ConfigurationComponent implements OnInit {
     this.bankInfoList = [];
     this.viewBonusInfoForm = this.formBuilder.group( {
       referralAmount: ['', Validators.required],
-      monthlyAmount: ['', Validators.required]
+      monthlyAmount: ['', Validators.required],
+      installmentToPay: ['', Validators.required]
     });
     this.bankInfoForm = this.formBuilder.group( {
       bankName: ['', Validators.required, Validators.maxLength(40)],
@@ -146,8 +147,14 @@ export class ConfigurationComponent implements OnInit {
     info.validBonus = true;
   }
 
-  updateLevel(info: IntroducerBonus, referralAmount: number, monthlyAmount: number, rc: any, pc: any): void {
+  updateLevel(info: IntroducerBonus, referralAmount: number, monthlyAmount: number,
+    installmentCount: number, rc: any, pc: any): void {
     console.log('update level called.');
+    if ( !info.validBonus) {
+      this.alertService.confirmationMessage('Warning', 'This information can not be updated.',
+      'warning', true, false, 'Ok', '', '');
+      return;
+    }
     if ( this.viewFormControl.referralAmount.touched &&
       this.viewFormControl.referralAmount.status === 'VALID') {
         info.referralBonus = referralAmount;
@@ -156,11 +163,24 @@ export class ConfigurationComponent implements OnInit {
         this.viewFormControl.monthlyAmount.status === 'VALID') {
           info.monthlyPayout = monthlyAmount;
         }
+        if ( this.viewFormControl.installmentToPay.touched &&
+          this.viewFormControl.installmentToPay.status === 'VALID') {
+            info.numberOfInstallmentToPay = installmentCount;
+          }
     this.loadingScreenService.startLoading();
     this.common.updateLevelInfo(info).subscribe( (response: boolean) => {
       this.loadingScreenService.stopLoading();
+      if (response) {
+        this.alertService.confirmationMessage('Success',
+        'Level bonus information updated successfully',
+        'success', true, false, 'Ok', '', '');
+      } else {
+        this.alertService.confirmationMessage('Error', 'Something went wrong!',
+    'error', true, false, 'Ok', '', '');
+      }
     }, (err) => {
       this.loadingScreenService.stopLoading();
+      console.log('error occured while updating level bonus information', err);
     });
   }
   addBankAccount(): void {
@@ -193,5 +213,27 @@ export class ConfigurationComponent implements OnInit {
       this.loadingScreenService.stopLoading();
       console.log(Err);
     });
+  }
+
+  removeCompanyBankDetails(index: number): void {
+    this.loadingScreenService.startLoading();
+    this.common.removeCompanyBankInfo(this.bankInfoList[index].ifscCode,
+      this.bankInfoList[index].bankName).subscribe(
+        (response: boolean) => {
+          this.loadingScreenService.stopLoading();
+          if (response) {
+            this.fetchBankInfoCompany();
+            this.alertService.confirmationMessage('Success',
+          'Bank account removed successfully',
+          'success', true, false, 'Ok', '', '');
+          } else {
+            this.alertService.confirmationMessage('Error', 'Something went wrong!',
+      'error', true, false, 'Ok', '', '');
+          }
+        }, (err) => {
+          console.log('error occured while removing company bank info', err);
+          this.loadingScreenService.stopLoading();
+        }
+      );
   }
 }
